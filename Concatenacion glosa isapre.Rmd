@@ -1,0 +1,26 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+This is an [R Markdown](http://rmarkdown.rstudio.com) Notebook. When you execute code within the notebook, the results appear beneath the code. 
+
+Try executing this chunk by clicking the *Run* button within the chunk or by placing your cursor inside it and pressing *Ctrl+Shift+Enter*. 
+
+```{r}
+library(xlsx)
+library(dplyr)
+```
+
+```{r}
+x <- read.xlsx2("C:/Users/HardwareX/Downloads/Nombres_Cirugias.xlsx",sheetName = "CIRUGIAS Base")
+y <- x %>% select("RutFecha","Glosa.Isapre")
+```
+
+```{r}
+z <- y %>% group_by(RutFecha) %>% mutate(bars_by_foo = paste0(Glosa.Isapre, collapse = "")) %>% distinct(Rut.Fecha, .keep_all = TRUE)
+```
+```{r}
+write.csv(z,"test.csv")
+```
+

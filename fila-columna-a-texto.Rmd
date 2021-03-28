@@ -1,0 +1,34 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+```{r}
+library(openxlsx)
+library(dplyr)
+library(reshape2)
+options(java.parameters = "-Xmx1000m")
+```
+
+```{r}
+x <- read.xlsx("C:/Users/HardwareX/Downloads/20210324 Listado de Inmuebles y financiamiento.xlsx")
+y <- x %>% select(Código.Inmueble,TipoDoc,MontoUF)
+Tipo.Pago <- x %>% group_by(TipoDoc) %>% count()
+```
+
+```{r}
+z1 <- x %>% group_by(Código.Inmueble) %>% mutate("TipoDOCCONC" = paste0(TipoDoc, collapse = "-")) %>% mutate("Monto" = paste0(MontoUF, collapse = "-"))
+```
+
+```{r}
+z2 <- reshape2::dcast(y, Código.Inmueble ~ TipoDoc, value.var = "MontoUF", fill = "0")
+```
+
+```{r}
+Final <- merge(z1,z2, by = "Código.Inmueble")
+```
+
+```{r}
+write.xlsx(Final, file = "TablaJavi.xlsx")
+```
+
