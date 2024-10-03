@@ -24,3 +24,5 @@ z <- y %>% group_by(RutFecha) %>% mutate(bars_by_foo = paste0(Glosa.Isapre, coll
 write.csv(z,"test.csv")
 ```
 
+#estoy anexando una linea de prueba escrita. "solo prueba"
+
